@@ -550,7 +550,7 @@ function createBlurMap() {
 			fillCircle(ct,x,y,rad+(rnd1+rnd2)/2);
 		}
 	}
-	blurMap2 = createCanvas(width*2,height*2,0,0,null,null,0,0,1);
+	blurMap2 = createCanvas(width,height,0,0,null,null,0,0,1);
 	let ct2 = blurMap2.getContext("2d");
 	ct2.drawImage(cn,0,0);
 	$("body").append(blurMap2);
