@@ -9,6 +9,22 @@ var stars=[];
 var blurMap;
 var blurMap2;
 
+
+var starAmounts = {
+	cStarField:10,
+	rStarField:0,
+	galaxies:4,
+	roundGalaxies:1,
+	spiralGalaxies:1,
+	riftGalaxies:1,
+	rndStarsL:1000,
+	rndStarsS:5000,
+	moons:3,
+	flares:5,
+
+}
+
+
 function start() {
 	width = window.innerWidth || document.documentElement.clientWidth / 1 || document.body.clientWidth
 	height = window.innerHeight || document.documentElement.clientHeight / 1 || document.body.clientHeight / 1;
@@ -20,6 +36,7 @@ function start() {
 	bgCanvas=createCanvas(width,height,0,0,"cnvBG","cnvBG",0,0,true);
 	ctx = bgCanvas.getContext("2d");
 	let starsStatic = createCanvas(width,height,0,0,"static","static",0,0,true);
+	starsStatic.style.zIndex = 100;
 	document.body.appendChild(starsStatic);
 	ctxStatic = starsStatic.getContext("2d");
 	$("body").append(bgCanvas);
@@ -32,7 +49,6 @@ function start() {
 	
 	createStars();
 
-	drawNebulas(ctx);
 	document.addEventListener("mousemove",handleMouseMove);
 	tick();
 }
@@ -221,19 +237,7 @@ function createSpiralGalaxy(ct,x,y,rad,arms,spin,stars) {
 
 	
 }
-var starAmounts = {
-	cStarField:10,
-	rStarField:0,
-	galaxies:4,
-	roundGalaxies:1,
-	spiralGalaxies:1,
-	riftGalaxies:1,
-	rndStarsL:1000,
-	rndStarsS:5000,
-	moons:3,
-	flares:5,
 
-}
 function createStars() {
 	
 	//colored starFields
@@ -426,7 +430,7 @@ function renderSun(ct,x,y,rad) {
 		
 	}
 
-	ct.drawImage(img,x-rad*4,y-rad*4);
+	ct.drawImage(img,x,y);
 }
 function renderMoon(ct,x,y,rad,dir) {
 	let img = createCanvas(rad*4,rad*4);
@@ -653,38 +657,12 @@ function drawNebula(ct,n) {
 			
 		
 }
-function drawNebulas(ct) {
-	
-	let ticker = 100;
-	while (nebulas.length<10) {
-		spawnNebula(ticker);
-		
-		ticker-=50;
-	}
-	for (let key=nebulas.length-1;key>=0;key--) {
 
-		let n = nebulas[key];
-		n[2]--;
-		if (n[2]<=0) {
-			nebulas.splice(key,1);
-			
-		} else {
-			drawNebula(ct,n);
-		}
-	
-	}
-	
-
-	
-}
 var nebulas=[];
 var mouseX = 0;
 var mouseY = 0;
-var selectedCursor = "WobblyEggs1";
 
-var mousePulseGoingBack = false;
-var mousePulse = 0;
-var currentEasing = "Linear";
+
 var easingTypes = 2;
 var cMouseX=0;
 var cMouseY=0;
